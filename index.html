@@ -136,7 +136,7 @@
   }
   .nav.shrunk{padding:12px 28px;background:rgba(4,6,10,.85)}
   .nav-l{display:flex;align-items:center;gap:18px}
-  .nav-l img{height:38px;filter:drop-shadow(0 0 12px rgba(57,255,102,.25))}
+  .nav-l img{height:40px;filter:drop-shadow(0 0 12px rgba(57,255,102,.25))}
   .nav-l .pill{
     padding:5px 10px;border:1px solid var(--rule-acid);border-radius:999px;
     font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;color:var(--acid);
@@ -514,6 +514,46 @@
   .b.brand img{object-fit:contain;width:60%;height:60%;filter:drop-shadow(0 0 30px rgba(57,255,102,.4))}
   .b.brand::after{display:none}
 
+  /* Text-only slot tile (no image) */
+  .b.slot{
+    background:#04060a;
+    padding:26px;
+    display:flex;flex-direction:column;justify-content:space-between;gap:16px;
+    transition:background .45s, border-color .4s, transform .4s;
+  }
+  .b.slot::after{display:none}
+  .b.slot::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:
+      radial-gradient(circle at 85% 20%, rgba(57,255,102,.12), transparent 55%),
+      repeating-linear-gradient(90deg, rgba(57,255,102,.04) 0 1px, transparent 1px 72px),
+      repeating-linear-gradient(0deg, rgba(57,255,102,.04) 0 1px, transparent 1px 72px);
+    mask-image:radial-gradient(ellipse at 100% 0%, #000, transparent 75%);
+  }
+  .b.slot .top,.b.slot .bot{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .b.slot .num{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--acid);text-transform:uppercase}
+  .b.slot .cat{font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;color:var(--ash);text-transform:uppercase;margin-bottom:10px}
+  .b.slot .ttl{
+    font-family:var(--f-disp);font-weight:800;font-size:clamp(17px,1.8vw,24px);
+    line-height:.95;color:var(--acid);text-transform:uppercase;letter-spacing:-.01em;
+    text-shadow:0 0 24px rgba(57,255,102,.3);
+  }
+  .b.slot .sub{
+    font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;color:var(--ash-2);
+    text-transform:uppercase;margin-top:10px;line-height:1.6;
+  }
+  .b.slot .arr{
+    width:36px;height:36px;display:grid;place-items:center;flex-shrink:0;
+    border:1px solid var(--rule-acid);color:var(--acid);font-family:var(--f-disp);font-weight:800;
+    transition:background .25s, color .25s, transform .25s;
+  }
+  .b.slot:hover{background-color:#070b12}
+  .b.slot:hover .arr{background:var(--acid);color:#000;transform:translateX(4px)}
+  .b.slot.big{padding:40px}
+  .b.slot.big .ttl{font-size:clamp(30px,4vw,54px);line-height:.9}
+  .b.slot.big .sub{font-size:13px;max-width:440px}
+  .b.slot.big .arr{width:48px;height:48px;font-size:18px}
+
   /* ───────────────────────────────────────
      TESTIMONIALS — Editorial
      ─────────────────────────────────────── */
@@ -621,6 +661,86 @@
   @media(max-width:900px){.contact-grid{grid-template-columns:1fr;gap:50px}}
 
   /* ───────────────────────────────────────
+     ABOUT / TEAM
+     ─────────────────────────────────────── */
+  .team{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
+  .member{
+    padding:30px;border:1px solid var(--rule);background:rgba(246,246,238,.02);
+    position:relative;overflow:hidden;
+    transition:border-color .4s, background .4s, transform .4s;
+  }
+  .member::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(380px 200px at 100% 0%, rgba(57,255,102,.06), transparent 70%);
+  }
+  .member:hover{border-color:var(--rule-acid);background:rgba(57,255,102,.03);transform:translateY(-4px)}
+  .member .avi{
+    width:100%;aspect-ratio:1/1;background:#04060a;
+    background-image:
+      radial-gradient(circle at 50% 40%, rgba(57,255,102,.14), transparent 60%),
+      repeating-linear-gradient(45deg, rgba(57,255,102,.05) 0 1px, transparent 1px 14px);
+    display:grid;place-items:center;
+    font-family:var(--f-disp);font-weight:900;font-size:clamp(56px,7vw,104px);
+    color:var(--acid);letter-spacing:-.04em;line-height:1;
+    text-shadow:0 0 40px rgba(57,255,102,.5);
+    border:1px solid var(--rule);
+    position:relative;
+  }
+  .member .avi::after{
+    content:"";position:absolute;inset:12px;border:1px dashed rgba(57,255,102,.22);
+    pointer-events:none;
+  }
+  .member .avi .dot{
+    position:absolute;top:14px;right:14px;
+    font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;color:var(--acid);
+    text-transform:uppercase;
+  }
+  .member .avi .dot::before{content:"●";margin-right:5px;animation:blink 1.4s infinite}
+  .member .info{margin-top:26px;position:relative;z-index:2}
+  .member .tag{font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;color:var(--acid);text-transform:uppercase;margin-bottom:14px}
+  .member .name{font-family:var(--f-disp);font-weight:800;font-size:clamp(22px,2.2vw,30px);text-transform:uppercase;letter-spacing:-.015em;line-height:1}
+  .member .role{font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;color:var(--ash);margin-top:12px;line-height:1.6}
+  @media(max-width:560px){.team{grid-template-columns:1fr}}
+
+  /* ───────────────────────────────────────
+     OBJECIÓN / REAL TALK
+     ─────────────────────────────────────── */
+  .obj{position:relative;overflow:hidden;background:#020406}
+  .obj::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(700px 350px at 90% 80%, rgba(57,255,102,.1), transparent 60%),
+      radial-gradient(500px 300px at 10% 10%, rgba(57,255,102,.06), transparent 60%);
+  }
+  .obj-grid{position:relative;display:grid;grid-template-columns:.95fr 1.05fr;gap:72px;align-items:center}
+  .obj h2{
+    font-family:var(--f-disp);font-weight:900;font-size:clamp(34px,5.2vw,74px);
+    line-height:.92;text-transform:uppercase;letter-spacing:-.025em;
+  }
+  .obj h2 em{font-style:italic;font-family:var(--f-edit);font-weight:700;color:var(--acid)}
+  .obj .intro{font-family:var(--f-edit);font-size:19px;line-height:1.6;color:var(--ash);margin-top:28px;max-width:520px}
+  .obj-items{display:flex;flex-direction:column;gap:18px}
+  .obj-item{
+    padding:28px 30px;border-left:3px solid var(--acid);background:rgba(57,255,102,.04);
+    border-top:1px solid rgba(57,255,102,.1);border-right:1px solid rgba(57,255,102,.1);border-bottom:1px solid rgba(57,255,102,.1);
+    position:relative;transition:background .35s, transform .35s;
+  }
+  .obj-item:hover{background:rgba(57,255,102,.08);transform:translateX(4px)}
+  .obj-item .q{
+    font-family:var(--f-edit);font-size:19px;font-style:italic;color:var(--bone);
+    line-height:1.5;font-weight:500;
+  }
+  .obj-item .q::before{content:"— ";color:var(--acid)}
+  .obj-item .a{
+    font-family:var(--f-mono);font-size:12.5px;line-height:1.7;color:var(--ash);
+    margin-top:16px;padding-top:16px;border-top:1px dashed rgba(57,255,102,.22);
+  }
+  .obj-item .a b{color:var(--acid);font-weight:500;letter-spacing:.04em}
+  .obj-cta{margin-top:40px;display:flex;flex-wrap:wrap;align-items:center;gap:22px}
+  .obj-cta .note{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--ash-2);text-transform:uppercase}
+  @media(max-width:900px){.obj-grid{grid-template-columns:1fr;gap:40px}}
+
+  /* ───────────────────────────────────────
      FOOTER
      ─────────────────────────────────────── */
   footer{padding:80px 0 36px;background:var(--void)}
@@ -634,7 +754,7 @@
     display:grid;grid-template-columns:1.2fr .8fr .8fr .8fr;gap:50px;
     padding-top:50px;border-top:1px solid var(--rule);
   }
-  .foot-grid .brand img{height:50px;margin-bottom:18px}
+  .foot-grid .brand img{height:35px;margin-bottom:18px}
   .foot-grid .brand p{color:var(--ash);font-size:14px;line-height:1.6;max-width:300px}
   .foot-grid h6{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--acid);text-transform:uppercase;margin-bottom:18px}
   .foot-grid ul{list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -703,6 +823,7 @@
     <a href="#diferencia">Diferencia</a>
     <a href="#metodo">Método</a>
     <a href="#trabajos">Trabajos</a>
+    <a href="#nosotros">Nosotros</a>
     <a href="#contacto">Contacto</a>
   </div>
   <div class="nav-r">
@@ -960,37 +1081,143 @@
     </div>
 
     <div class="bento">
-      <a href="https://wa.me/56991777994?text=Hola%2C%20vi%20su%20portafolio%20y%20quiero%20conversar." class="b b1 rv">
-        <img src="assets/Soluciones Integrales - Plantilla PPT  copia.jpg" alt="Soluciones integrales" />
-        <div class="meta"><div><div class="l">[ Caso destacado ]</div><div class="t">Soluciones Integrales</div></div><div class="arr">→</div></div>
+      <a href="https://wa.me/56991777994?text=Hola%2C%20vi%20su%20portafolio%20y%20quiero%20conversar." class="b b1 slot big rv">
+        <div class="top">
+          <span class="num">01 / Caso destacado</span>
+          <span class="arr">→</span>
+        </div>
+        <div class="bot">
+          <div>
+            <div class="cat">[ Branding × Performance ]</div>
+            <div class="ttl">Caso de estudio 01</div>
+            <div class="sub">Rebranding integral + campaña de adquisición · Pyme de servicios · +3× consultas en un trimestre.</div>
+          </div>
+        </div>
       </a>
-      <a href="https://wa.me/56991777994" class="b b2 brand rv d1">
-        <img src="assets/Logo.png" alt="Logo ReBest" />
+      <a href="https://wa.me/56991777994" class="b b2 slot rv d1">
+        <div class="top">
+          <span class="num">02</span>
+          <span class="arr">→</span>
+        </div>
+        <div class="bot">
+          <div>
+            <div class="cat">[ Identidad Visual ]</div>
+            <div class="ttl">Rediseño de marca</div>
+            <div class="sub">Logotipo · Manual · Paleta</div>
+          </div>
+        </div>
       </a>
-      <a href="https://wa.me/56991777994" class="b b3 rv d1">
-        <img src="assets/banner.png" alt="Banner" />
-        <div class="meta"><div><div class="l">[ Identidad ]</div><div class="t">Wordmark</div></div><div class="arr">→</div></div>
+      <a href="https://wa.me/56991777994" class="b b3 slot rv d1">
+        <div class="top">
+          <span class="num">03</span>
+          <span class="arr">→</span>
+        </div>
+        <div class="bot">
+          <div>
+            <div class="cat">[ Meta Ads ]</div>
+            <div class="ttl">Campaña lead-gen</div>
+          </div>
+        </div>
       </a>
-      <a href="https://wa.me/56991777994" class="b b4 rv d2">
-        <img src="assets/R.jpg" alt="R" />
-        <div class="meta"><div><div class="l">[ Branding ]</div><div class="t">Tipografía</div></div><div class="arr">→</div></div>
+      <a href="https://wa.me/56991777994" class="b b4 slot rv d2">
+        <div class="top">
+          <span class="num">04</span>
+          <span class="arr">→</span>
+        </div>
+        <div class="bot">
+          <div>
+            <div class="cat">[ Google Ads ]</div>
+            <div class="ttl">Search & Display</div>
+            <div class="sub">Performance + analítica</div>
+          </div>
+        </div>
       </a>
-      <a href="https://wa.me/56991777994" class="b b5 rv d2">
-        <img src="assets/e.jpg" alt="E" />
-        <div class="meta"><div><div class="l">[ Contenido ]</div><div class="t">Campaña</div></div><div class="arr">→</div></div>
+      <a href="https://wa.me/56991777994" class="b b5 slot rv d2">
+        <div class="top">
+          <span class="num">05</span>
+          <span class="arr">→</span>
+        </div>
+        <div class="bot">
+          <div>
+            <div class="cat">[ Motion ]</div>
+            <div class="ttl">Reels virales</div>
+            <div class="sub">Producción audiovisual</div>
+          </div>
+        </div>
       </a>
-      <a href="https://wa.me/56991777994" class="b b6 rv d3">
-        <img src="assets/b.jpg" alt="B" />
-        <div class="meta"><div><div class="l">[ Diseño ]</div><div class="t">Feed</div></div><div class="arr">→</div></div>
+      <a href="https://wa.me/56991777994" class="b b6 slot rv d3">
+        <div class="top">
+          <span class="num">06</span>
+          <span class="arr">→</span>
+        </div>
+        <div class="bot">
+          <div>
+            <div class="cat">[ Contenido Social ]</div>
+            <div class="ttl">Parrilla editorial</div>
+            <div class="sub">Gestión mensual de redes</div>
+          </div>
+        </div>
       </a>
-      <a href="https://wa.me/56991777994" class="b b7 rv d3">
-        <img src="assets/Serpiente.jpg" alt="Serpiente" />
-        <div class="meta"><div><div class="l">[ Símbolo ]</div><div class="t">Identidad ReBest</div></div><div class="arr">→</div></div>
+      <a href="https://wa.me/56991777994" class="b b7 slot rv d3">
+        <div class="top">
+          <span class="num">07</span>
+          <span class="arr">→</span>
+        </div>
+        <div class="bot">
+          <div>
+            <div class="cat">[ Conversión ]</div>
+            <div class="ttl">Embudo + landing</div>
+            <div class="sub">Tráfico pago · captura · cierre</div>
+          </div>
+        </div>
       </a>
-      <a href="https://wa.me/56991777994" class="b b8 rv d4">
-        <img src="assets/s.jpg" alt="S" />
-        <div class="meta"><div><div class="l">[ Ads ]</div><div class="t">Performance</div></div><div class="arr">→</div></div>
+      <a href="https://wa.me/56991777994" class="b b8 slot rv d4">
+        <div class="top">
+          <span class="num">08</span>
+          <span class="arr">→</span>
+        </div>
+        <div class="bot">
+          <div>
+            <div class="cat">[ Community ]</div>
+            <div class="ttl">Gestión 24/7</div>
+            <div class="sub">Copywriting · respuestas · crecimiento orgánico</div>
+          </div>
+        </div>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SOBRE NOSOTROS · EQUIPO
+     ══════════════════════════════════════ -->
+<section id="nosotros">
+  <div class="wrap">
+    <div class="sec-hd rv">
+      <div class="num">[ 05 / TEAM ]<small>Sobre nosotros</small></div>
+      <div>
+        <h2>Un equipo<br/>de <em>dos cabezas</em>.</h2>
+        <p class="lede">ReBest nace del cruce entre dirección creativa y estrategia digital. Dos fundadores con roles complementarios que aseguran que cada proyecto tenga identidad fuerte y, además, resultados comerciales reales.</p>
+      </div>
+    </div>
+
+    <div class="team rv">
+      <article class="member">
+        <div class="avi">NP<span class="dot">Cofundador</span></div>
+        <div class="info">
+          <div class="tag">[ Dirección Creativa ]</div>
+          <div class="name">Nicolás Pizarro</div>
+          <div class="role">Director de Producción Creativa, Arte, Fotografía y Filmmaking</div>
+        </div>
+      </article>
+      <article class="member">
+        <div class="avi">DG<span class="dot">Cofundador</span></div>
+        <div class="info">
+          <div class="tag">[ Marketing Digital ]</div>
+          <div class="name">Duván Gómez Orobio</div>
+          <div class="role">Director de Marketing Digital, Planificación Estratégica y Campañas Ads (Meta · Google)</div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -1001,7 +1228,7 @@
 <section id="testimonios">
   <div class="wrap">
     <div class="sec-hd rv">
-      <div class="num">[ 05 / VOICES ]<small>Testimonios</small></div>
+      <div class="num">[ 06 / VOICES ]<small>Testimonios</small></div>
       <div>
         <h2>Lo que dicen<br/>las marcas que <em>cambiaron</em>.</h2>
       </div>
@@ -1032,6 +1259,38 @@
         <span>Google <small>Ads</small></span>
         <span>Adobe <small>Creative Suite</small></span>
         <span>TikTok <small>For Business</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     OBJECIÓN · REAL TALK
+     ══════════════════════════════════════ -->
+<section class="obj" id="objeciones">
+  <div class="wrap">
+    <div class="obj-grid rv">
+      <div>
+        <div class="tag" style="margin-bottom:22px">[ 07 / REAL TALK ]</div>
+        <h2>¿Tuviste una mala experiencia<br/>con otra <em>agencia</em>?</h2>
+        <p class="intro">Te entendemos. Contratar marketing digital se siente demasiado como una lotería: pagas, esperas, y muchas veces no vuelve nada. Hablemos claro sobre las dos cosas que nos dicen nuestros clientes antes de empezar.</p>
+        <div class="obj-cta">
+          <a href="https://wa.me/56991777994?text=Hola%2C%20tuve%20malas%20experiencias%20con%20otras%20agencias%20y%20quiero%20conversar." class="btn-wa">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.45A11.94 11.94 0 0 0 12.06 0C5.49 0 .15 5.34.15 11.92c0 2.1.55 4.15 1.6 5.95L0 24l6.3-1.66a11.9 11.9 0 0 0 5.76 1.47h.01c6.57 0 11.91-5.34 11.92-11.91 0-3.18-1.24-6.18-3.47-8.45Z"/></svg>
+            Conversar sin compromiso
+          </a>
+          <div class="note">Sin contratos forzados · sin letra chica</div>
+        </div>
+      </div>
+      <div class="obj-items">
+        <div class="obj-item">
+          <p class="q">"No sé si esto de las redes sociales realmente funciona."</p>
+          <p class="a"><b>[ Respuesta honesta ]</b> No funciona si nadie tiene una estrategia clara detrás. Publicar por publicar quema presupuesto — y hemos visto muchas marcas en ese ciclo. Trabajamos con objetivos concretos y métricas reportadas mes a mes: sabrás qué entra, qué sale y qué ajustamos. Si la aguja no se mueve, lo reconocemos y cambiamos rumbo juntos.</p>
+        </div>
+        <div class="obj-item">
+          <p class="q">"Ya tuve malas experiencias con agencias de marketing."</p>
+          <p class="a"><b>[ También, honesto ]</b> El rubro está lleno de agencias que cobran por pegar plantillas, se desaparecen y entregan reportes inflados. En ReBest te respondemos, te reportamos y te explicamos cada decisión. Si durante el primer mes no sientes el cambio, no hay obligación de seguir — nos importa más la relación que forzar una permanencia.</p>
+        </div>
       </div>
     </div>
   </div>
