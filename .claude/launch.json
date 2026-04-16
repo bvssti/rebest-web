@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "live-server",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "live-server", "--port=8080", "--no-browser", "--quiet"],
+      "port": 8080
+    },
+    {
+      "name": "serve",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", ".", "-l", "3000", "--no-clipboard"],
+      "port": 3000
+    },
+    {
+      "name": "python-http",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8000"],
+      "port": 8000
+    }
+  ]
+}

@@ -563,6 +563,78 @@ footer{padding:80px 0 40px;border-top:1px solid var(--border)}
 
 body.drawer-open{overflow:hidden}
 
+/* ── SKIN-SHEDDING NARRATIVE ─────────────
+   Scale = unified visual thread across sections
+   Color: #00ff41 @ low opacity on deep black
+─────────────────────────────────────────── */
+:root{--scale:#00ff41}
+
+/* HERO · scales emerge pattern */
+.hero-scales{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;overflow:hidden;
+  mask-image:radial-gradient(ellipse 50% 65% at 28% 55%,rgba(0,0,0,.25) 0,rgba(0,0,0,.55) 40%,#000 75%);
+  -webkit-mask-image:radial-gradient(ellipse 50% 65% at 28% 55%,rgba(0,0,0,.25) 0,rgba(0,0,0,.55) 40%,#000 75%);
+}
+.hero-scales svg{width:100%;height:100%;display:block}
+.hero-scales .scale{will-change:opacity,transform;transform-origin:center;transform-box:fill-box}
+
+/* SERVICES · sinuous connector drawn L→R */
+.svc-grid{position:relative}
+.svc-connector{
+  position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
+  height:clamp(140px,22vh,240px);pointer-events:none;z-index:2;
+  mix-blend-mode:screen;
+}
+.svc-connector svg{width:100%;height:100%;display:block}
+.svc-connector .c-line,.svc-connector .c-glow{
+  fill:none;stroke:var(--scale);stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+}
+.svc-connector .c-line{stroke-width:1.2;opacity:.32}
+.svc-connector .c-glow{stroke-width:4;opacity:.12;filter:blur(2px)}
+
+/* DIFERENCIAL · edge scales (shedding) */
+.diff-scales{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.diff-scales .edge{position:absolute;will-change:opacity,transform}
+.diff-scales .edge svg{width:100%;height:100%;display:block}
+.diff-scales .edge-t{top:-2%;left:0;right:0;height:36%}
+.diff-scales .edge-b{bottom:-2%;left:0;right:0;height:36%}
+.diff-scales .edge-l{top:0;bottom:0;left:-2%;width:26%}
+.diff-scales .edge-r{top:0;bottom:0;right:-2%;width:26%}
+.diff-scales .scale{fill:var(--scale);opacity:.12}
+.diff-scales .edge-t{mask-image:linear-gradient(to bottom,#000 20%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 20%,transparent)}
+.diff-scales .edge-b{mask-image:linear-gradient(to top,#000 20%,transparent);-webkit-mask-image:linear-gradient(to top,#000 20%,transparent)}
+.diff-scales .edge-l{mask-image:linear-gradient(to right,#000 20%,transparent);-webkit-mask-image:linear-gradient(to right,#000 20%,transparent)}
+.diff-scales .edge-r{mask-image:linear-gradient(to left,#000 20%,transparent);-webkit-mask-image:linear-gradient(to left,#000 20%,transparent)}
+.diff-sticky{position:relative}
+/* Make phase-a + phase-b sit above scales */
+.diff-phase-a,.diff-phase-b{position:relative;z-index:2}
+.diff-phase-b{z-index:3}
+
+/* MÉTODO · scale grows from each number */
+.mstep .mscale{
+  position:absolute;top:18px;left:-6px;
+  width:82px;height:104px;pointer-events:none;z-index:0;
+  opacity:0;transform:scale(.25) translateY(8px);
+  transform-origin:40% 45%;will-change:opacity,transform;
+}
+.mstep .mscale path{fill:var(--scale);opacity:.13}
+.mstep .mscale path.outline{fill:none;stroke:var(--scale);stroke-width:.8;opacity:.35}
+.mstep .num,.mstep h4,.mstep p{position:relative;z-index:1}
+@media(max-width:560px){.mstep .mscale{width:64px;height:84px;left:-8px;top:4px}}
+
+/* PORTAFOLIO · border traced like a serpent */
+.port-item{position:relative}
+.port-item .p-border{
+  position:absolute;inset:0;pointer-events:none;z-index:3;
+  width:100%;height:100%;
+}
+.port-item .p-border path{
+  fill:none;stroke:var(--scale);stroke-width:1.2;
+  vector-effect:non-scaling-stroke;opacity:.6;
+}
+
 /* ── REDUCED MOTION ─────────────────────── */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -601,6 +673,9 @@ body.drawer-open{overflow:hidden}
 <header class="hero" id="top">
   <div class="hero-orb" aria-hidden="true"></div>
   <div class="hero-serpent-glow" aria-hidden="true"></div>
+
+  <!-- Skin-shedding thread #1: scales emerging from darkness -->
+  <div class="hero-scales" id="hero-scales" aria-hidden="true"></div>
 
   <!-- Chapter 1: Serpent as genesis — thin line drawing itself -->
   <svg class="hero-serpent" viewBox="0 0 100 900" fill="none" aria-hidden="true">
@@ -677,6 +752,13 @@ body.drawer-open{overflow:hidden}
     <div class="sec-label t-mono rv"><span>Servicios</span></div>
     <h2 class="t-display rv">Soluciones integrales de<br/><span class="t-serif accent">comunicación y negocio.</span></h2>
     <div class="svc-grid">
+      <!-- Skin-shedding thread #2: sinuous connector drawn L→R on scroll -->
+      <div class="svc-connector" aria-hidden="true">
+        <svg viewBox="0 0 1200 220" preserveAspectRatio="none">
+          <path class="c-glow" d="M-40,110 C120,20 260,200 420,110 C580,20 720,200 880,110 C1020,35 1120,150 1240,110"/>
+          <path class="c-line" d="M-40,110 C120,20 260,200 420,110 C580,20 720,200 880,110 C1020,35 1120,150 1240,110"/>
+        </svg>
+      </div>
       <div class="svc-card rv">
         <div class="num">01</div>
         <h3>Producción Creativa y Dirección de Arte</h3>
@@ -738,6 +820,13 @@ body.drawer-open{overflow:hidden}
 <!-- ═══ DIFERENCIAL — Pinned storytelling moment ═══ -->
 <section id="diferencia">
   <div class="diff-sticky">
+    <!-- Skin-shedding thread #3: scales appear from edges, then shed away -->
+    <div class="diff-scales" aria-hidden="true">
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
+      <div class="edge edge-l"></div>
+      <div class="edge edge-r"></div>
+    </div>
     <div class="diff-inner wrap">
 
       <!-- Phase A: Two-column description -->
@@ -1295,6 +1384,179 @@ gsap.to('.contact-serpent', {
   y: -50,
   ease: 'none'
 });
+
+/* ════════════════════════════════════════
+   SKIN-SHEDDING NARRATIVE
+   One SVG scale shape, six scroll manifestations
+════════════════════════════════════════ */
+const SVGNS = 'http://www.w3.org/2000/svg';
+const scalePath = (x, y, w, h) =>
+  `M${x + w/2} ${y + h*0.05} Q${x + w - 1} ${y + h/2} ${x + w/2} ${y + h*0.95} Q${x + 1} ${y + h/2} ${x + w/2} ${y + h*0.05} Z`;
+
+/* ── HERO · scales emerge with random stagger ── */
+(() => {
+  const host = document.getElementById('hero-scales');
+  if (!host) return;
+  const cols = 16, rows = 10;
+  const W = 1200, H = 800;
+  const cellW = W / cols, cellH = H / rows;
+  const svg = document.createElementNS(SVGNS, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+  const scales = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const x = c * cellW + (r % 2 ? cellW / 2 : 0);
+      const y = r * cellH;
+      const p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('class', 'scale');
+      p.setAttribute('d', scalePath(x, y, cellW * 0.78, cellH * 0.95));
+      p.setAttribute('fill', '#00ff41');
+      p.setAttribute('fill-opacity', '0.13');
+      svg.appendChild(p);
+      scales.push(p);
+    }
+  }
+  host.appendChild(svg);
+  gsap.fromTo(scales,
+    { opacity: 0, scale: 0.4 },
+    {
+      opacity: 1, scale: 1,
+      duration: 1.2,
+      ease: 'power3.out',
+      stagger: { each: 0.006, from: 'random' },
+      delay: 0.2
+    }
+  );
+  /* Soft fade as user leaves hero */
+  gsap.to(scales, {
+    opacity: 0.35, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+  });
+})();
+
+/* ── SERVICES · sinuous connector draws L→R on scroll ── */
+(() => {
+  document.querySelectorAll('.svc-connector path').forEach(p => {
+    const len = p.getTotalLength();
+    gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.to(p, {
+      strokeDashoffset: 0, ease: 'none',
+      scrollTrigger: {
+        trigger: '#servicios',
+        start: 'top 72%',
+        end: 'center 45%',
+        scrub: 1.1
+      }
+    });
+  });
+})();
+
+/* ── DIFERENCIAL · edge scales populate + shed with timeline ── */
+(() => {
+  const populate = (el, cols, rows, W, H) => {
+    const svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+    const cellW = W / cols, cellH = H / rows;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * cellW + (r % 2 ? cellW / 2 : 0);
+        const y = r * cellH;
+        const p = document.createElementNS(SVGNS, 'path');
+        p.setAttribute('class', 'scale');
+        p.setAttribute('d', scalePath(x, y, cellW * 0.78, cellH * 0.95));
+        svg.appendChild(p);
+      }
+    }
+    el.appendChild(svg);
+  };
+  document.querySelectorAll('.diff-scales .edge-t, .diff-scales .edge-b').forEach(el => populate(el, 22, 5, 1200, 200));
+  document.querySelectorAll('.diff-scales .edge-l, .diff-scales .edge-r').forEach(el => populate(el, 4, 18, 80, 800));
+
+  /* Desktop-only sticky timeline (reuses existing mm) */
+  mm.add('(min-width: 768px)', () => {
+    gsap.set('.diff-scales .edge', { opacity: 0 });
+    gsap.set('.diff-scales .edge-t', { y: -40 });
+    gsap.set('.diff-scales .edge-b', { y: 40 });
+    gsap.set('.diff-scales .edge-l', { x: -40 });
+    gsap.set('.diff-scales .edge-r', { x: 40 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#diferencia',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1.4
+      }
+    });
+    tl
+      /* Emerge from edges (0 → .45) */
+      .to('.diff-scales .edge-t', { opacity: 1, y: 0, duration: .35, ease: 'none' }, 0.05)
+      .to('.diff-scales .edge-b', { opacity: 1, y: 0, duration: .35, ease: 'none' }, 0.05)
+      .to('.diff-scales .edge-l', { opacity: 1, x: 0, duration: .35, ease: 'none' }, 0.1)
+      .to('.diff-scales .edge-r', { opacity: 1, x: 0, duration: .35, ease: 'none' }, 0.1)
+      /* Shed away as quote reveals (.5 → .85) */
+      .to('.diff-scales .edge-t', { opacity: 0, y: -30, duration: .3, ease: 'none' }, 0.55)
+      .to('.diff-scales .edge-b', { opacity: 0, y: 30, duration: .3, ease: 'none' }, 0.55)
+      .to('.diff-scales .edge-l', { opacity: 0, x: -30, duration: .3, ease: 'none' }, 0.6)
+      .to('.diff-scales .edge-r', { opacity: 0, x: 30, duration: .3, ease: 'none' }, 0.6);
+  });
+})();
+
+/* ── MÉTODO · scale grows from step number ── */
+(() => {
+  document.querySelectorAll('.mstep').forEach(step => {
+    const svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('class', 'mscale');
+    svg.setAttribute('viewBox', '0 0 84 108');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = `
+      <path d="M42 6 Q76 44 42 102 Q8 44 42 6 Z"/>
+      <path class="outline" d="M42 14 Q66 46 42 94 Q18 46 42 14 Z"/>
+    `;
+    step.insertBefore(svg, step.firstChild);
+    gsap.to(svg, {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      duration: 1.1,
+      ease: 'back.out(1.5)',
+      scrollTrigger: {
+        trigger: step,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+  });
+})();
+
+/* ── PORTAFOLIO · border traced like a serpent ── */
+(() => {
+  document.querySelectorAll('.port-item').forEach(item => {
+    const svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('class', 'p-border');
+    svg.setAttribute('viewBox', '0 0 100 75');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('aria-hidden', 'true');
+    /* Start at top-left, trace clockwise back to start */
+    svg.innerHTML = `<path d="M0.6 0.6 L99.4 0.6 L99.4 74.4 L0.6 74.4 Z"/>`;
+    item.appendChild(svg);
+    const path = svg.querySelector('path');
+    const len = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.to(path, {
+      strokeDashoffset: 0,
+      duration: 1.8,
+      ease: 'power2.inOut',
+      scrollTrigger: {
+        trigger: item,
+        start: 'top 82%',
+        toggleActions: 'play none none none'
+      }
+    });
+  });
+})();
 
 /* ────────────────────────────────────────
    CONTACT FORM → MAILTO
