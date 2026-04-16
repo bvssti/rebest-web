@@ -563,6 +563,35 @@ footer{padding:80px 0 40px;border-top:1px solid var(--border)}
 
 body.drawer-open{overflow:hidden}
 
+/* ── SCROLL VIDEO / SKIN TEXTURE ─────────
+   Fixed behind content · fades in at transitions
+   Mobile: swaps to static image to save data
+─────────────────────────────────────────── */
+.snake-media{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  overflow:hidden;opacity:0;will-change:opacity,clip-path;
+  clip-path:inset(0 0 0 0);
+}
+.snake-media-video,
+.snake-media-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;filter:saturate(1.1) contrast(1.05);
+}
+.snake-media-img{display:none}
+@media(max-width:768px){
+  .snake-media-video{display:none}
+  .snake-media-img{display:block}
+}
+@media(prefers-reduced-motion:reduce){
+  .snake-media-video{display:none}
+  .snake-media-img{display:block}
+}
+/* Content must stack above the fixed media */
+nav,.drawer,.hero,.marquee-band,section,.stats-band,.sec-divider,footer{
+  position:relative;z-index:1;
+}
+nav{z-index:50}.drawer{z-index:49}
+
 /* ── SKIN-SHEDDING NARRATIVE ─────────────
    Scale = unified visual thread across sections
    Color: #00ff41 @ low opacity on deep black
@@ -667,6 +696,17 @@ body.drawer-open{overflow:hidden}
   <a href="#nosotros" data-close>Nosotros</a>
   <a href="#contacto" data-close>Contacto</a>
   <div class="d-cta"><a href="#contacto" class="btn btn-primary" data-close style="width:100%;justify-content:center">Cotizar Proyecto</a></div>
+</div>
+
+<!-- ═══ SCROLL-TIED SKIN VIDEO ═══
+     Appears between hero→services and diff→method transitions.
+     Scrubs video.currentTime with scroll progress. -->
+<div class="snake-media" id="snake-media" aria-hidden="true">
+  <video class="snake-media-video" id="snake-video"
+    src="assets/snake-loop.mp4"
+    autoplay muted playsinline loop preload="auto"
+    disableRemotePlayback></video>
+  <img class="snake-media-img" src="assets/Serpiente.jpg" alt="" aria-hidden="true"/>
 </div>
 
 <!-- ═══ HERO ═══ -->
@@ -1556,6 +1596,92 @@ const scalePath = (x, y, w, h) =>
       }
     });
   });
+})();
+
+/* ════════════════════════════════════════
+   SCROLL-TIED SKIN VIDEO
+   Two appearances: hero→servicios, diferencial→método
+   Playback tied to scroll progress (currentTime scrub)
+════════════════════════════════════════ */
+(() => {
+  const media = document.getElementById('snake-media');
+  const video = document.getElementById('snake-video');
+  if (!media || !video) return;
+
+  const isMobile = matchMedia('(max-width: 768px)').matches;
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const useVideo = !isMobile && !prefersReduced;
+
+  /* Kickstart autoplay on desktop, then hand control to scroll scrubber */
+  if (useVideo) {
+    const tryPlay = () => video.play().catch(() => {});
+    video.addEventListener('loadedmetadata', () => {
+      tryPlay();
+      // Take manual control once we have a frame
+      setTimeout(() => { video.pause(); video.loop = false; }, 120);
+    }, { once: true });
+    // Fallback if metadata already loaded
+    if (video.readyState >= 1) {
+      tryPlay();
+      setTimeout(() => { video.pause(); video.loop = false; }, 120);
+    }
+  }
+
+  /* ── APPEARANCE A — hero → servicios ──
+     Single timeline scrubbed across the transition to avoid tween conflicts */
+  gsap.set(media, { opacity: 0, clipPath: 'inset(0 0 0 0)' });
+  const tlA = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'bottom 95%',
+      endTrigger: '#servicios',
+      end: 'top 20%',
+      scrub: 1
+    }
+  });
+  tlA
+    .to(media, { opacity: 0.15, duration: 1 })
+    .to(media, { opacity: 0, duration: 1 });
+
+  /* ── APPEARANCE B — diferencial → método ──
+     clip-path reveal: opens from center-outwards, collapses back at método */
+  const tlB = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: {
+      trigger: '#diferencia',
+      start: 'bottom 95%',
+      endTrigger: '#metodo',
+      end: 'top 15%',
+      scrub: 1.2
+    }
+  });
+  tlB
+    .fromTo(media,
+      { opacity: 0, clipPath: 'inset(45% 45% 45% 45%)' },
+      { opacity: 0.15, clipPath: 'inset(0% 0% 0% 0%)', duration: 1 })
+    .to(media, { opacity: 0, clipPath: 'inset(45% 45% 45% 45%)', duration: 1 });
+
+  /* ── VIDEO SCRUB — only while media is visible ── */
+  if (useVideo) {
+    const syncVideo = () => {
+      if (!video.duration || video.readyState < 2) return;
+      // Only scrub when media is on-screen (perf)
+      const op = parseFloat(getComputedStyle(media).opacity);
+      if (op < 0.02) return;
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      const p = docH > 0 ? window.scrollY / docH : 0;
+      // Loop through video multiple times across the page for continuous motion
+      const t = ((p * 3) % 1) * video.duration;
+      video.currentTime = Math.max(0, Math.min(video.duration - 0.05, t));
+    };
+    ScrollTrigger.create({
+      trigger: document.body,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: syncVideo
+    });
+  }
 })();
 
 /* ────────────────────────────────────────
